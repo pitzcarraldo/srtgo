@@ -522,6 +522,7 @@ class Korail:
         self.korail_pw = korail_pw
         self.verbose = verbose
         self.logined = False
+        self.is_login = False
         self.membership_number = None
         self.name = None
         self.email = None
@@ -589,14 +590,17 @@ class Korail:
                 f"로그인 성공: {self.name} (멤버십번호: {self.membership_number}, 전화번호: {self.phone_number})"
             )
             self.logined = True
+            self.is_login = True
             return True
         self.logined = False
+        self.is_login = False
         return False
 
     def logout(self):
         r = self._session.get(API_ENDPOINTS["logout"])
         self._log(r.text)
         self.logined = False
+        self.is_login = False
 
     def _result_check(self, j):
         if j.get("strResult") == "FAIL":
